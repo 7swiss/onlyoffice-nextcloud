@@ -251,7 +251,9 @@ class FileVersions {
         if ($owner === null) {
             return;
         }
-        if (empty($history) || empty($changes)) {
+        if (empty($history) 
+            || empty($changes)
+            || $fileInfo->getStorage()->instanceOfStorage(SharingExternalStorage::class)) {
             return;
         }
 
@@ -369,6 +371,10 @@ class FileVersions {
         $logger = \OC::$server->getLogger();
 
         if ($fileInfo === null || $author === null) {
+            return;
+        }
+
+        if ($fileInfo->getStorage()->instanceOfStorage(SharingExternalStorage::class)) {
             return;
         }
 
